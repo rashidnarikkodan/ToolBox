@@ -6,7 +6,17 @@ const ToolContext = createContext();
 export const ToolProvider = ({ children }) => {
   const [tools, setTools] = useState(() => {
     const savedTools = localStorage.getItem('toolbox_tools');
-    return savedTools ? JSON.parse(savedTools) : INITIAL_TOOLS;
+    const localTools = savedTools ? JSON.parse(savedTools) : [];
+    
+    // Merge logic: Start with local tools, add initial tools that aren't there yet (by URL)
+    const merged = [...localTools];
+    INITIAL_TOOLS.forEach(tool => {
+      if (!merged.some(t => t.url.toLowerCase().replace(/\/$/, '') === tool.url.toLowerCase().replace(/\/$/, ''))) {
+        merged.push(tool);
+      }
+    });
+    
+    return merged;
   });
 
   useEffect(() => {
@@ -14,14 +24,14 @@ export const ToolProvider = ({ children }) => {
   }, [tools]);
 
   const addTool = (newTool) => {
-    // Normalize URL for comparison
     const normalizedUrl = newTool.url.toLowerCase().replace(/\/$/, '');
     
     if (tools.some(t => t.url.toLowerCase().replace(/\/$/, '') === normalizedUrl)) {
       return { success: false, error: 'This tool is already in your list!' };
     }
     
-    setTools((prev) => [...prev, { ...newTool, id: Date.now().toString() }]);
+    const toolWithId = { ...newTool, id: Date.now().toString() };
+    setTools((prev) => [...prev, toolWithId]);
     return { success: true };
   };
 
@@ -29,8 +39,28 @@ export const ToolProvider = ({ children }) => {
     setTools((prev) => prev.filter(t => t.id !== id));
   };
 
+  const importTools = (jsonString) => {
+    try {
+      const imported = JSON.parse(jsonString);
+      if (!Array.isArray(imported)) throw new Error('Invalid format');
+      
+      setTools(prev => {
+        const next = [...prev];
+        imported.forEach(tool => {
+          if (!next.some(t => t.url === tool.url)) {
+            next.push({ ...tool, id: tool.id || Date.now().toString() + Math.random() });
+          }
+        });
+        return next;
+      });
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: 'Failed to import. Invalid JSON.' };
+    }
+  };
+
   return (
-    <ToolContext.Provider value={{ tools, addTool, removeTool }}>
+    <ToolContext.Provider value={{ tools, addTool, removeTool, importTools }}>
       {children}
     </ToolContext.Provider>
   );
