@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToolProvider } from './context/ToolContext';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
+import ToolsPage from './pages/ToolsPage';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/tools" element={<div className='pt-24 p-8 text-center text-4xl font-bold text-slate-400'>Tools Discovery Page Coming Soon</div>} />
+            <Route path="/tools" element={<ToolsPage />} />
           </Routes>
         </div>
       </Router>
