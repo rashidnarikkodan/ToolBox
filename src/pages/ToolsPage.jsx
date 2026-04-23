@@ -1,41 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTools } from '../context/ToolContext';
 import ToolList from '../components/ToolList';
-import { Plus } from 'lucide-react';
+import SearchBar from '../components/SearchBar';
+import CategoryFilter from '../components/CategoryFilter';
+import { Plus, SlidersHorizontal } from 'lucide-react';
 
 const ToolsPage = () => {
   const { tools, removeTool } = useTools();
-  
-  // These will be implemented in the next feature branch
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const filteredTools = tools.filter(tool => {
-    const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         tool.category.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === 'All' || tool.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Dynamically extract unique categories
+  const categories = useMemo(() => {
+    const cats = tools.map(t => t.category);
+    return [...new Set(cats)].sort();
+  }, [tools]);
+
+  const filteredTools = useMemo(() => {
+    return tools.filter(tool => {
+      const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                           tool.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           tool.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = activeCategory === 'All' || tool.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [tools, searchQuery, activeCategory]);
 
   return (
-    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <h1 className="text-4xl font-black text-white mb-2">Explore Tools</h1>
+    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="animate-in fade-in slide-in-from-left duration-500">
+          <h1 className="text-4xl font-black text-white mb-2 tracking-tight">Explore Tools</h1>
           <p className="text-slate-400">Discover and manage your professional toolset.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-primary-500/20">
+        <button className="flex items-center gap-2 px-6 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-primary-500/20 active:scale-95 shrink-0">
           <Plus className="w-5 h-5" />
           Add New Tool
         </button>
-      </div>
+      </header>
 
-      <div className="flex flex-col gap-8">
-        {/* Placeholders for search and filter */}
-        <div className="h-12 bg-slate-900/50 rounded-2xl border border-slate-800 animate-pulse" />
-        
+      <section className="flex flex-col gap-8 mb-12">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-slate-500 shrink-0">
+              <SlidersHorizontal className="w-4 h-4" />
+              <span className="text-sm font-medium">Filter by:</span>
+            </div>
+            <CategoryFilter 
+              categories={categories} 
+              activeCategory={activeCategory} 
+              onCategoryChange={setActiveCategory} 
+            />
+          </div>
+        </div>
+      </section>
+
+      <main>
         <ToolList tools={filteredTools} onDelete={removeTool} />
-      </div>
+      </main>
     </div>
   );
 };
