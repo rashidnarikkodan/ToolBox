@@ -1,1 +1,5 @@
-node_modules\n.env\ndist\n.vite\n.DS_Store
+node_modules
+.env
+dist
+.vite
+.DS_Store
