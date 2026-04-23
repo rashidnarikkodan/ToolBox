@@ -6,17 +6,9 @@ const ToolContext = createContext();
 export const ToolProvider = ({ children }) => {
   const [tools, setTools] = useState(() => {
     const savedTools = localStorage.getItem('toolbox_tools');
-    const localTools = savedTools ? JSON.parse(savedTools) : [];
-    
-    // Merge logic: Start with local tools, add initial tools that aren't there yet (by URL)
-    const merged = [...localTools];
-    INITIAL_TOOLS.forEach(tool => {
-      if (!merged.some(t => t.url.toLowerCase().replace(/\/$/, '') === tool.url.toLowerCase().replace(/\/$/, ''))) {
-        merged.push(tool);
-      }
-    });
-    
-    return merged;
+    // If no tools in localStorage → insert INITIAL_TOOLS (seed data)
+    // Do NOT overwrite existing data if it exists.
+    return savedTools ? JSON.parse(savedTools) : INITIAL_TOOLS;
   });
 
   useEffect(() => {
@@ -24,6 +16,7 @@ export const ToolProvider = ({ children }) => {
   }, [tools]);
 
   const addTool = (newTool) => {
+    // Normalize URL for comparison
     const normalizedUrl = newTool.url.toLowerCase().replace(/\/$/, '');
     
     if (tools.some(t => t.url.toLowerCase().replace(/\/$/, '') === normalizedUrl)) {

@@ -17,7 +17,7 @@ export const INITIAL_TOOLS = [
     icon: 'https://www.google.com/s2/favicons?domain=upwork.com&sz=64'
   },
   {
-    id: '9',
+    id: '3',
     name: 'Toptal',
     url: 'https://toptal.com',
     category: 'Freelance',
@@ -27,7 +27,7 @@ export const INITIAL_TOOLS = [
   
   // Jobs
   {
-    id: '3',
+    id: '4',
     name: 'LinkedIn',
     url: 'https://linkedin.com',
     category: 'Jobs',
@@ -35,7 +35,7 @@ export const INITIAL_TOOLS = [
     icon: 'https://www.google.com/s2/favicons?domain=linkedin.com&sz=64'
   },
   {
-    id: '4',
+    id: '5',
     name: 'Indeed',
     url: 'https://indeed.com',
     category: 'Jobs',
@@ -43,147 +43,95 @@ export const INITIAL_TOOLS = [
     icon: 'https://www.google.com/s2/favicons?domain=indeed.com&sz=64'
   },
   {
-    id: '10',
-    name: 'Glassdoor',
-    url: 'https://glassdoor.com',
+    id: '6',
+    name: 'Wellfound',
+    url: 'https://wellfound.com',
     category: 'Jobs',
-    description: 'Search jobs, read company reviews, and see salaries.',
-    icon: 'https://www.google.com/s2/favicons?domain=glassdoor.com&sz=64'
+    description: 'The place where startups and job seekers connect.',
+    icon: 'https://www.google.com/s2/favicons?domain=wellfound.com&sz=64'
   },
 
-  // Coding
+  // Coding Practice
   {
-    id: '5',
+    id: '7',
     name: 'LeetCode',
     url: 'https://leetcode.com',
-    category: 'Coding',
+    category: 'Coding Practice',
     description: 'Level up your coding skills and prepare for technical interviews.',
     icon: 'https://www.google.com/s2/favicons?domain=leetcode.com&sz=64'
   },
   {
-    id: '6',
+    id: '8',
     name: 'Codeforces',
     url: 'https://codeforces.com',
-    category: 'Coding',
+    category: 'Coding Practice',
     description: 'A platform that hosts programming competitions.',
     icon: 'https://www.google.com/s2/favicons?domain=codeforces.com&sz=64'
   },
   {
+    id: '9',
+    name: 'HackerRank',
+    url: 'https://hackerrank.com',
+    category: 'Coding Practice',
+    description: 'Practice coding, prepare for interviews, and get hired.',
+    icon: 'https://www.google.com/s2/favicons?domain=hackerrank.com&sz=64'
+  },
+
+  // Learning
+  {
+    id: '10',
+    name: 'MDN',
+    url: 'https://developer.mozilla.org',
+    category: 'Learning',
+    description: 'Resources for developers, by developers.',
+    icon: 'https://www.google.com/s2/favicons?domain=mozilla.org&sz=64'
+  },
+  {
     id: '11',
-    name: 'GitHub',
-    url: 'https://github.com',
-    category: 'Coding',
-    description: 'The world\'s leading software development platform.',
-    icon: 'https://www.google.com/s2/favicons?domain=github.com&sz=64'
+    name: 'freeCodeCamp',
+    url: 'https://freecodecamp.org',
+    category: 'Learning',
+    description: 'Learn to code for free.',
+    icon: 'https://www.google.com/s2/favicons?domain=freecodecamp.org&sz=64'
   },
   {
     id: '12',
-    name: 'Stack Overflow',
-    url: 'https://stackoverflow.com',
-    category: 'Coding',
-    description: 'Where developers learn, share, and build careers.',
-    icon: 'https://www.google.com/s2/favicons?domain=stackoverflow.com&sz=64'
+    name: 'GeeksforGeeks',
+    url: 'https://geeksforgeeks.org',
+    category: 'Learning',
+    description: 'A computer science portal for geeks.',
+    icon: 'https://www.google.com/s2/favicons?domain=geeksforgeeks.org&sz=64'
   },
 
-  // AI & Innovation
+  // Content
   {
     id: '13',
-    name: 'ChatGPT',
-    url: 'https://chat.openai.com',
-    category: 'AI',
-    description: 'Conversational AI by OpenAI for productivity and creativity.',
-    icon: 'https://www.google.com/s2/favicons?domain=openai.com&sz=64'
-  },
-  {
-    id: '14',
-    name: 'Claude',
-    url: 'https://claude.ai',
-    category: 'AI',
-    description: 'Next-generation AI assistant by Anthropic.',
-    icon: 'https://www.google.com/s2/favicons?domain=anthropic.com&sz=64'
-  },
-  {
-    id: '15',
-    name: 'Perplexity',
-    url: 'https://perplexity.ai',
-    category: 'AI',
-    description: 'AI-powered search engine for accurate information.',
-    icon: 'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=64'
-  },
-
-  // Design
-  {
-    id: '16',
-    name: 'Figma',
-    url: 'https://figma.com',
-    category: 'Design',
-    description: 'The collaborative interface design tool.',
-    icon: 'https://www.google.com/s2/favicons?domain=figma.com&sz=64'
-  },
-  {
-    id: '17',
-    name: 'Canva',
-    url: 'https://canva.com',
-    category: 'Design',
-    description: 'Empowering the world to design anything.',
-    icon: 'https://www.google.com/s2/favicons?domain=canva.com&sz=64'
-  },
-  {
-    id: '18',
-    name: 'Dribbble',
-    url: 'https://dribbble.com',
-    category: 'Design',
-    description: 'Show and tell for designers.',
-    icon: 'https://www.google.com/s2/favicons?domain=dribbble.com&sz=64'
-  },
-
-  // Productivity
-  {
-    id: '19',
-    name: 'Notion',
-    url: 'https://notion.so',
-    category: 'Productivity',
-    description: 'The all-in-one workspace for notes, tasks, and wikis.',
-    icon: 'https://www.google.com/s2/favicons?domain=notion.so&sz=64'
-  },
-  {
-    id: '20',
-    name: 'Slack',
-    url: 'https://slack.com',
-    category: 'Productivity',
-    description: 'Where work happens, bringing teams together.',
-    icon: 'https://www.google.com/s2/favicons?domain=slack.com&sz=64'
-  },
-  {
-    id: '21',
-    name: 'Trello',
-    url: 'https://trello.com',
-    category: 'Productivity',
-    description: 'Manage projects and organize anything with visual boards.',
-    icon: 'https://www.google.com/s2/favicons?domain=trello.com&sz=64'
-  },
-
-  // Writing & Content
-  {
-    id: '7',
     name: 'Medium',
     url: 'https://medium.com',
-    category: 'Writing',
+    category: 'Content',
     description: 'A place to read, write, and connect with stories that matter.',
     icon: 'https://www.google.com/s2/favicons?domain=medium.com&sz=64'
   },
   {
-    id: '22',
-    name: 'Substack',
-    url: 'https://substack.com',
-    category: 'Writing',
-    description: 'Independent publishing made simple.',
-    icon: 'https://www.google.com/s2/favicons?domain=substack.com&sz=64'
+    id: '14',
+    name: 'Dev.to',
+    url: 'https://dev.to',
+    category: 'Content',
+    description: 'A constructive and inclusive social network for software developers.',
+    icon: 'https://www.google.com/s2/favicons?domain=dev.to&sz=64'
+  },
+  {
+    id: '15',
+    name: 'Hashnode',
+    url: 'https://hashnode.com',
+    category: 'Content',
+    description: 'The easiest way to start a developer blog.',
+    icon: 'https://www.google.com/s2/favicons?domain=hashnode.com&sz=64'
   },
 
   // Social
   {
-    id: '8',
+    id: '16',
     name: 'X',
     url: 'https://x.com',
     category: 'Social',
@@ -191,11 +139,161 @@ export const INITIAL_TOOLS = [
     icon: 'https://www.google.com/s2/favicons?domain=x.com&sz=64'
   },
   {
-    id: '23',
-    name: 'YouTube',
-    url: 'https://youtube.com',
+    id: '17',
+    name: 'Reddit',
+    url: 'https://reddit.com',
     category: 'Social',
-    description: 'Enjoy the videos and music you love.',
-    icon: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=64'
+    description: 'The front page of the internet.',
+    icon: 'https://www.google.com/s2/favicons?domain=reddit.com&sz=64'
+  },
+
+  // Design
+  {
+    id: '18',
+    name: 'Figma',
+    url: 'https://figma.com',
+    category: 'Design',
+    description: 'The collaborative interface design tool.',
+    icon: 'https://www.google.com/s2/favicons?domain=figma.com&sz=64'
+  },
+  {
+    id: '19',
+    name: 'Dribbble',
+    url: 'https://dribbble.com',
+    category: 'Design',
+    description: 'Show and tell for designers.',
+    icon: 'https://www.google.com/s2/favicons?domain=dribbble.com&sz=64'
+  },
+
+  // API Tools
+  {
+    id: '20',
+    name: 'Postman',
+    url: 'https://postman.com',
+    category: 'API Tools',
+    description: 'The collaboration platform for API development.',
+    icon: 'https://www.google.com/s2/favicons?domain=postman.com&sz=64'
+  },
+  {
+    id: '21',
+    name: 'Insomnia',
+    url: 'https://insomnia.rest',
+    category: 'API Tools',
+    description: 'The open-source desktop application that takes the pain out of interacting with HTTP APIs.',
+    icon: 'https://www.google.com/s2/favicons?domain=insomnia.rest&sz=64'
+  },
+
+  // Database
+  {
+    id: '22',
+    name: 'MongoDB Compass',
+    url: 'https://mongodb.com/products/compass',
+    category: 'Database',
+    description: 'The GUI for MongoDB.',
+    icon: 'https://www.google.com/s2/favicons?domain=mongodb.com&sz=64'
+  },
+  {
+    id: '23',
+    name: 'Supabase',
+    url: 'https://supabase.com',
+    category: 'Database',
+    description: 'The open source Firebase alternative.',
+    icon: 'https://www.google.com/s2/favicons?domain=supabase.com&sz=64'
+  },
+  {
+    id: '24',
+    name: 'Firebase',
+    url: 'https://firebase.google.com',
+    category: 'Database',
+    description: 'Google\'s mobile and web app development platform.',
+    icon: 'https://www.google.com/s2/favicons?domain=firebase.google.com&sz=64'
+  },
+
+  // Dev Environment
+  {
+    id: '25',
+    name: 'VS Code',
+    url: 'https://code.visualstudio.com',
+    category: 'Dev Environment',
+    description: 'Code editing. Redefined.',
+    icon: 'https://www.google.com/s2/favicons?domain=visualstudio.com&sz=64'
+  },
+  {
+    id: '26',
+    name: 'Cursor',
+    url: 'https://cursor.sh',
+    category: 'Dev Environment',
+    description: 'The AI-first code editor.',
+    icon: 'https://www.google.com/s2/favicons?domain=cursor.sh&sz=64'
+  },
+  {
+    id: '27',
+    name: 'Alacritty',
+    url: 'https://alacritty.org',
+    category: 'Dev Environment',
+    description: 'A cross-platform, GPU-accelerated terminal emulator.',
+    icon: 'https://www.google.com/s2/favicons?domain=alacritty.org&sz=64'
+  },
+
+  // Deployment
+  {
+    id: '28',
+    name: 'Vercel',
+    url: 'https://vercel.com',
+    category: 'Deployment',
+    description: 'Develop. Preview. Ship.',
+    icon: 'https://www.google.com/s2/favicons?domain=vercel.com&sz=64'
+  },
+  {
+    id: '29',
+    name: 'Netlify',
+    url: 'https://netlify.com',
+    category: 'Deployment',
+    description: 'The platform for modern web development.',
+    icon: 'https://www.google.com/s2/favicons?domain=netlify.com&sz=64'
+  },
+  {
+    id: '30',
+    name: 'Railway',
+    url: 'https://railway.app',
+    category: 'Deployment',
+    description: 'Bring your code, we\'ll handle the rest.',
+    icon: 'https://www.google.com/s2/favicons?domain=railway.app&sz=64'
+  },
+
+  // Packages
+  {
+    id: '31',
+    name: 'npm',
+    url: 'https://npmjs.com',
+    category: 'Packages',
+    description: 'The world\'s largest software registry.',
+    icon: 'https://www.google.com/s2/favicons?domain=npmjs.com&sz=64'
+  },
+  {
+    id: '32',
+    name: 'pnpm',
+    url: 'https://pnpm.io',
+    category: 'Packages',
+    description: 'Fast, disk space efficient package manager.',
+    icon: 'https://www.google.com/s2/favicons?domain=pnpm.io&sz=64'
+  },
+
+  // Debugging
+  {
+    id: '33',
+    name: 'Stack Overflow',
+    url: 'https://stackoverflow.com',
+    category: 'Debugging',
+    description: 'Where developers learn, share, and build careers.',
+    icon: 'https://www.google.com/s2/favicons?domain=stackoverflow.com&sz=64'
+  },
+  {
+    id: '34',
+    name: 'Chrome DevTools',
+    url: 'https://developer.chrome.com/docs/devtools',
+    category: 'Debugging',
+    description: 'Web authoring and debugging tools built into Chrome.',
+    icon: 'https://www.google.com/s2/favicons?domain=chrome.com&sz=64'
   }
 ];
