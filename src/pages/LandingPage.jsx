@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, Sparkles, Code, Compass, Briefcase, Feather, Globe } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Sparkles, Code, Compass, Briefcase, Feather, Globe, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const LandingPage = () => {
@@ -114,8 +114,8 @@ const LandingPage = () => {
       {/* Developer Section */}
       <section className="mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-900 pt-32">
         <div className="p-12 rounded-[3rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 flex flex-col items-center text-center">
-          <div className="w-24 h-24 rounded-full bg-primary-500 mb-8 flex items-center justify-center text-4xl shadow-2xl shadow-primary-500/50">
-            👨‍💻
+          <div className="w-24 h-24 rounded-full bg-primary-500 mb-8 flex items-center justify-center shadow-2xl shadow-primary-500/50 text-white">
+            <User className="w-12 h-12" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-4">Built by a Visionary</h2>
           <p className="text-slate-400 max-w-xl mb-8">

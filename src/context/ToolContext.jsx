@@ -14,14 +14,15 @@ export const ToolProvider = ({ children }) => {
   }, [tools]);
 
   const addTool = (newTool) => {
-    setTools((prev) => {
-      // Check for duplicates by URL
-      if (prev.some(t => t.url === newTool.url)) {
-        alert('This tool is already in your list!');
-        return prev;
-      }
-      return [...prev, { ...newTool, id: Date.now().toString() }];
-    });
+    // Normalize URL for comparison
+    const normalizedUrl = newTool.url.toLowerCase().replace(/\/$/, '');
+    
+    if (tools.some(t => t.url.toLowerCase().replace(/\/$/, '') === normalizedUrl)) {
+      return { success: false, error: 'This tool is already in your list!' };
+    }
+    
+    setTools((prev) => [...prev, { ...newTool, id: Date.now().toString() }]);
+    return { success: true };
   };
 
   const removeTool = (id) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Link as LinkIcon, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
 import { extractToolMeta } from '../utils/toolMeta';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,11 +8,20 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
     name: '',
     url: '',
     category: '',
+    customCategory: '',
     description: '',
     icon: ''
   });
   const [isAutoFilling, setIsAutoFilling] = useState(false);
   const [error, setError] = useState('');
+
+  // Reset form when modal opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({ name: '', url: '', category: '', customCategory: '', description: '', icon: '' });
+      setError('');
+    }
+  }, [isOpen]);
 
   // Handle URL change with auto-fill
   useEffect(() => {
@@ -22,13 +31,12 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
       const meta = extractToolMeta(formData.url);
       if (meta) {
         setIsAutoFilling(true);
-        // Simulate a slight delay for better UX "magic" feel
         setTimeout(() => {
           setFormData(prev => ({
             ...prev,
             name: prev.name || meta.name,
             icon: meta.icon,
-            description: prev.description || `A powerful tool for ${prev.category || 'your workflow'}.`
+            description: prev.description || `Discover more about ${meta.name || 'this tool'}.`
           }));
           setIsAutoFilling(false);
         }, 600);
@@ -40,7 +48,11 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.url || !formData.category) {
+    setError('');
+
+    const finalCategory = formData.category === 'Other' ? formData.customCategory : formData.category;
+
+    if (!formData.name || !formData.url || !finalCategory) {
       setError('Please fill in all required fields.');
       return;
     }
@@ -52,9 +64,16 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
       return;
     }
 
-    onAdd(formData);
-    setFormData({ name: '', url: '', category: '', description: '', icon: '' });
-    onClose();
+    const result = onAdd({
+      ...formData,
+      category: finalCategory
+    });
+
+    if (result && !result.success) {
+      setError(result.error);
+    } else {
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -62,7 +81,6 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-        {/* Backdrop */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -71,7 +89,6 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
           className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
         />
         
-        {/* Modal Content */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -89,7 +106,6 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* URL Input */}
             <div>
               <label className="block text-sm font-bold text-slate-400 mb-2 ml-1 uppercase tracking-wider">Tool URL *</label>
               <div className="relative">
@@ -111,7 +127,6 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
               </div>
             </div>
 
-            {/* Name and Icon Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-bold text-slate-400 mb-2 ml-1 uppercase tracking-wider">Tool Name *</label>
@@ -141,12 +156,28 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
                   {categories.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))}
-                  <option value="Other">Other</option>
+                  <option value="Other">Other...</option>
                 </select>
               </div>
             </div>
 
-            {/* Description */}
+            {formData.category === 'Other' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+              >
+                <label className="block text-sm font-bold text-slate-400 mb-2 ml-1 uppercase tracking-wider">Custom Category *</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Design"
+                  value={formData.customCategory}
+                  onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })}
+                  className="block w-full px-4 py-3.5 bg-slate-950 border border-slate-800 text-white rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all placeholder:text-slate-700"
+                />
+              </motion.div>
+            )}
+
             <div>
               <label className="block text-sm font-bold text-slate-400 mb-2 ml-1 uppercase tracking-wider">Description</label>
               <textarea
@@ -159,7 +190,7 @@ const AddToolForm = ({ isOpen, onClose, onAdd, categories }) => {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm">
+              <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm animate-in fade-in zoom-in duration-200">
                 <AlertCircle className="w-4 h-4" />
                 {error}
               </div>
