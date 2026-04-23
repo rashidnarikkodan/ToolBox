@@ -3,16 +3,15 @@ import { useTools } from '../context/ToolContext';
 import ToolList from '../components/ToolList';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
-import AddToolForm from '../components/AddToolForm';
-import { Plus, SlidersHorizontal, Share2, Download, Check } from 'lucide-react';
+import { SlidersHorizontal, Share2, Check, X, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ToolsPage = () => {
-  const { tools, addTool, removeTool, importTools } = useTools();
+  const { tools } = useTools();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShareFeedback, setIsShareFeedback] = useState(false);
+  const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
 
   const categories = useMemo(() => {
     const cats = tools.map(t => t.category);
@@ -36,26 +35,18 @@ const ToolsPage = () => {
     setTimeout(() => setIsShareFeedback(false), 2000);
   };
 
-  const handleImport = () => {
-    const input = prompt('Paste the shared toolset JSON here:');
-    if (input) {
-      const result = importTools(input);
-      if (!result.success) alert(result.error);
-    }
-  };
-
   return (
-    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
+    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen relative">
+      {/* Header */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <h1 className="text-4xl font-black text-white mb-2 tracking-tight">Explore Tools</h1>
-          <p className="text-slate-400">Discover and manage your professional toolset.</p>
+          <p className="text-slate-400">Discover your next favorite developer tool.</p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <button 
             onClick={handleShare}
-            className="flex items-center gap-2 px-4 py-3.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-2xl font-bold transition-all border border-slate-800 relative"
-            title="Export toolset to clipboard"
+            className="flex items-center gap-2 px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-2xl font-bold transition-all border border-slate-800 relative shadow-xl shadow-black/20"
           >
             <AnimatePresence mode="wait">
               {isShareFeedback ? (
@@ -78,59 +69,106 @@ const ToolsPage = () => {
                   className="flex items-center gap-2"
                 >
                   <Share2 className="w-5 h-5" />
-                  <span>Share</span>
+                  <span>Share Toolset</span>
                 </motion.div>
               )}
             </AnimatePresence>
           </button>
-          
-          <button 
-            onClick={handleImport}
-            className="flex items-center gap-2 px-4 py-3.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-2xl font-bold transition-all border border-slate-800"
-            title="Import toolset from JSON"
-          >
-            <Download className="w-5 h-5" />
-            <span>Import</span>
-          </button>
-
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-6 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-primary-500/20 active:scale-95"
-          >
-            <Plus className="w-5 h-5" />
-            <span>Add Tool</span>
-          </button>
         </div>
       </header>
 
-      <section className="flex flex-col gap-8 mb-12">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
-          
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-slate-500 shrink-0">
-              <SlidersHorizontal className="w-4 h-4" />
-              <span className="text-sm font-medium">Filter by:</span>
-            </div>
-            <CategoryFilter 
-              categories={categories} 
-              activeCategory={activeCategory} 
-              onCategoryChange={setActiveCategory} 
-            />
-          </div>
-        </div>
+      {/* Controls Row */}
+      <section className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        
+        <button
+          onClick={() => setIsFilterSidebarOpen(true)}
+          className="flex items-center gap-2 px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold border border-slate-800 transition-all shadow-xl shadow-black/20"
+        >
+          <Filter className="w-5 h-5 text-primary-400" />
+          <span>Filter by Category</span>
+          {activeCategory !== 'All' && (
+            <span className="ml-1 px-2 py-0.5 bg-primary-500 text-white text-[10px] rounded-full uppercase">
+              {activeCategory}
+            </span>
+          )}
+        </button>
       </section>
 
+      {/* Main Listing */}
       <main>
-        <ToolList tools={filteredTools} onDelete={removeTool} />
+        <ToolList tools={filteredTools} />
       </main>
 
-      <AddToolForm 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onAdd={addTool}
-        categories={categories}
-      />
+      {/* Filter Sidebar Overlay */}
+      <AnimatePresence>
+        {isFilterSidebarOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsFilterSidebarOpen(false)}
+              className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[100]"
+            />
+            
+            {/* Sidebar */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-full max-w-sm bg-slate-900 border-l border-slate-800 shadow-2xl z-[101] p-8 overflow-y-auto"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary-500/10 rounded-xl">
+                    <SlidersHorizontal className="w-6 h-6 text-primary-400" />
+                  </div>
+                  <h2 className="text-2xl font-black text-white">Filters</h2>
+                </div>
+                <button
+                  onClick={() => setIsFilterSidebarOpen(false)}
+                  className="p-2 hover:bg-slate-800 rounded-xl text-slate-400 hover:text-white transition-all"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-8">
+                <div>
+                  <label className="block text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-4 ml-1">
+                    Categories
+                  </label>
+                  <CategoryFilter
+                    categories={categories}
+                    activeCategory={activeCategory}
+                    onCategoryChange={(cat) => {
+                      setActiveCategory(cat);
+                      // Optional: Close on selection for mobile-friendly feel
+                      // setIsFilterSidebarOpen(false);
+                    }}
+                    layout="vertical"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-slate-800">
+                 <button
+                  onClick={() => {
+                    setActiveCategory('All');
+                    setIsFilterSidebarOpen(false);
+                  }}
+                  className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl font-bold transition-all"
+                >
+                  Reset All Filters
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

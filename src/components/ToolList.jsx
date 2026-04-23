@@ -3,7 +3,7 @@ import ToolCard from './ToolCard';
 import { Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const ToolList = ({ tools, onDelete }) => {
+const ToolList = ({ tools }) => {
   if (tools.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -28,7 +28,7 @@ const ToolList = ({ tools, onDelete }) => {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.2 }}
           >
-            <ToolCard tool={tool} onDelete={onDelete} />
+            <ToolCard tool={tool} />
           </motion.div>
         ))}
       </AnimatePresence>

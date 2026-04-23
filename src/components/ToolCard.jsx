@@ -1,7 +1,7 @@
 import React from 'react';
-import { ExternalLink, Trash2 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
-const ToolCard = ({ tool, onDelete }) => {
+const ToolCard = ({ tool }) => {
   return (
     <div className="group relative bg-slate-900 border border-slate-800 rounded-3xl p-6 transition-all hover:border-primary-500/50 hover:shadow-2xl hover:shadow-primary-500/10 flex flex-col h-full">
       <div className="flex items-start justify-between mb-4">
@@ -12,13 +12,6 @@ const ToolCard = ({ tool, onDelete }) => {
             <div className="text-xl font-bold text-primary-400">{tool.name[0]}</div>
           )}
         </div>
-        <button 
-          onClick={() => onDelete(tool.id)}
-          className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
-          title="Remove Tool"
-        >
-          <Trash2 className="w-4 h-4" />
-        </button>
       </div>
 
       <div className="mb-4">

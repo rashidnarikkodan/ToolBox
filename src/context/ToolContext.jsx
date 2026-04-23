@@ -4,10 +4,8 @@ import { INITIAL_TOOLS } from '../data/seed';
 const ToolContext = createContext();
 
 export const ToolProvider = ({ children }) => {
-  const [tools, setTools] = useState(() => {
+  const [tools] = useState(() => {
     const savedTools = localStorage.getItem('toolbox_tools');
-    // If no tools in localStorage → insert INITIAL_TOOLS (seed data)
-    // Do NOT overwrite existing data if it exists.
     return savedTools ? JSON.parse(savedTools) : INITIAL_TOOLS;
   });
 
@@ -15,45 +13,8 @@ export const ToolProvider = ({ children }) => {
     localStorage.setItem('toolbox_tools', JSON.stringify(tools));
   }, [tools]);
 
-  const addTool = (newTool) => {
-    // Normalize URL for comparison
-    const normalizedUrl = newTool.url.toLowerCase().replace(/\/$/, '');
-    
-    if (tools.some(t => t.url.toLowerCase().replace(/\/$/, '') === normalizedUrl)) {
-      return { success: false, error: 'This tool is already in your list!' };
-    }
-    
-    const toolWithId = { ...newTool, id: Date.now().toString() };
-    setTools((prev) => [...prev, toolWithId]);
-    return { success: true };
-  };
-
-  const removeTool = (id) => {
-    setTools((prev) => prev.filter(t => t.id !== id));
-  };
-
-  const importTools = (jsonString) => {
-    try {
-      const imported = JSON.parse(jsonString);
-      if (!Array.isArray(imported)) throw new Error('Invalid format');
-      
-      setTools(prev => {
-        const next = [...prev];
-        imported.forEach(tool => {
-          if (!next.some(t => t.url === tool.url)) {
-            next.push({ ...tool, id: tool.id || Date.now().toString() + Math.random() });
-          }
-        });
-        return next;
-      });
-      return { success: true };
-    } catch (e) {
-      return { success: false, error: 'Failed to import. Invalid JSON.' };
-    }
-  };
-
   return (
-    <ToolContext.Provider value={{ tools, addTool, removeTool, importTools }}>
+    <ToolContext.Provider value={{ tools }}>
       {children}
     </ToolContext.Provider>
   );
