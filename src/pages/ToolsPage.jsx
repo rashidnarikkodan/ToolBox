@@ -3,12 +3,14 @@ import { useTools } from '../context/ToolContext';
 import ToolList from '../components/ToolList';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
+import AddToolForm from '../components/AddToolForm';
 import { Plus, SlidersHorizontal } from 'lucide-react';
 
 const ToolsPage = () => {
-  const { tools, removeTool } = useTools();
+  const { tools, addTool, removeTool } = useTools();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Dynamically extract unique categories
   const categories = useMemo(() => {
@@ -33,7 +35,10 @@ const ToolsPage = () => {
           <h1 className="text-4xl font-black text-white mb-2 tracking-tight">Explore Tools</h1>
           <p className="text-slate-400">Discover and manage your professional toolset.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-primary-500/20 active:scale-95 shrink-0">
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 px-6 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-primary-500/20 active:scale-95 shrink-0"
+        >
           <Plus className="w-5 h-5" />
           Add New Tool
         </button>
@@ -60,6 +65,13 @@ const ToolsPage = () => {
       <main>
         <ToolList tools={filteredTools} onDelete={removeTool} />
       </main>
+
+      <AddToolForm 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onAdd={addTool}
+        categories={categories}
+      />
     </div>
   );
 };
