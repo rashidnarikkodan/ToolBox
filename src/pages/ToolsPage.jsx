@@ -19,12 +19,26 @@ const ToolsPage = () => {
   }, [tools]);
 
   const filteredTools = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    
     return tools.filter(tool => {
-      const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           tool.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           tool.description.toLowerCase().includes(searchQuery.toLowerCase());
+      // 1. Category Filter
       const matchesCategory = activeCategory === 'All' || tool.category === activeCategory;
-      return matchesSearch && matchesCategory;
+      if (!matchesCategory) return false;
+
+      // 2. Advanced Search Filter
+      if (!query) return true;
+
+      const nameMatch = tool.name.toLowerCase().includes(query);
+      const categoryMatch = tool.category.toLowerCase().includes(query);
+      const descriptionMatch = tool.description.toLowerCase().includes(query);
+      
+      // Keywords Match (Advanced)
+      const keywordMatch = tool.keywords?.some(kw => kw.toLowerCase().includes(query));
+
+      // Related Terms (Fuzzy/Contextual)
+      // Example: searching "javascript" should find "React" even if name doesn't match
+      return nameMatch || categoryMatch || descriptionMatch || keywordMatch;
     });
   }, [tools, searchQuery, activeCategory]);
 
@@ -41,7 +55,7 @@ const ToolsPage = () => {
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <h1 className="text-4xl font-black text-white mb-2 tracking-tight">Explore Tools</h1>
-          <p className="text-slate-400">Discover your next favorite developer tool.</p>
+          <p className="text-slate-400">Discover your next favorite developer tool with smart search.</p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <button 
@@ -146,8 +160,6 @@ const ToolsPage = () => {
                     activeCategory={activeCategory}
                     onCategoryChange={(cat) => {
                       setActiveCategory(cat);
-                      // Optional: Close on selection for mobile-friendly feel
-                      // setIsFilterSidebarOpen(false);
                     }}
                     layout="vertical"
                   />
