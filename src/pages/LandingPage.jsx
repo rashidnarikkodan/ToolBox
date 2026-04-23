@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, Sparkles, Code, Briefcase, Feather, Globe } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Sparkles, Code, Compass, Briefcase, Feather, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const LandingPage = () => {
