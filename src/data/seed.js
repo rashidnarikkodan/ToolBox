@@ -3,7 +3,7 @@ export const INITIAL_TOOLS = [
   { id: 'f1', name: 'Fiverr', url: 'https://fiverr.com', category: 'Freelance', description: 'Find the perfect freelance services for your business.', icon: 'https://www.google.com/s2/favicons?domain=fiverr.com&sz=64', keywords: ['gig', 'outsourcing', 'design', 'dev', 'marketing'] },
   { id: 'f2', name: 'Upwork', url: 'https://upwork.com', category: 'Freelance', description: 'The world\'s work marketplace.', icon: 'https://www.google.com/s2/favicons?domain=upwork.com&sz=64', keywords: ['jobs', 'remote', 'talent', 'hiring', 'freelancer'] },
   { id: 'f3', name: 'Toptal', url: 'https://toptal.com', category: 'Freelance', description: 'Hire the top 3% of freelance talent.', icon: 'https://www.google.com/s2/favicons?domain=toptal.com&sz=64', keywords: ['elite', 'developers', 'finance', 'project management'] },
-  { id: 'f4', name: 'Guru', url: 'https://guru.com', category: 'Freelance', description: 'Find and hire talented freelancers online.', icon: 'https://www.google.com/s2/favicons?domain=guru.com&sz=64', keywords: ['jobs', 'bid', 'flexible'] },
+  { id: 'f4', name: 'Guru', url: 'https://guru.com', category: 'Freelance', description: 'Find and hire talented freelanhttps://toolbox-nine-sepia.vercel.app/cers online.', icon: 'https://www.google.com/s2/favicons?domain=guru.com&sz=64', keywords: ['jobs', 'bid', 'flexible'] },
   { id: 'f5', name: 'Freelancer.com', url: 'https://freelancer.com', category: 'Freelance', description: 'The largest crowdsourcing marketplace.', icon: 'https://www.google.com/s2/favicons?domain=freelancer.com&sz=64', keywords: ['projects', 'contest', 'hiring'] },
 
   // --- JOBS ---
